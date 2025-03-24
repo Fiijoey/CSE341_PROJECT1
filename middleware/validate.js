@@ -7,7 +7,8 @@ const saveStaff = async (req, res, next) => {
     department: "required|string",
     position: "string",
     startDate: "required|date",
-    addresss: "required|string"
+    addresss: "required|string",
+    phone: "required|string"
   };
 
   await validator(req.body, validationRule, {}, (err, status) => {
