@@ -23,6 +23,10 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongodb": "^6.15.0",
-    "mongoose": "^8.12.2"
+    "mongoose": "^8.12.2",
+    "swagger": "^0.0.1",
+    "swagger-autogen": "^2.23.7",
+    "swagger-ui-express": "^5.0.1",
+    "validatorjs": "^3.22.1"
   }
 }

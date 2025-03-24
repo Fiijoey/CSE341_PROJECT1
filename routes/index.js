@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-//router.use("/", require("./swagger"));
+router.use("/", require("./swagger"));
 
 router.get("/", (req, res) => {
   res.send(
@@ -8,6 +8,6 @@ router.get("/", (req, res) => {
   );
 });
 
-//router.use("/contacts", require("./contacts"));
+router.use("/contacts", require("./contacts"));
 
 module.exports = router;
