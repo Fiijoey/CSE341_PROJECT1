@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 app.use(
   cors({ methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"] })
 );
-app.use(cors({ origin: "**" })); // Allow all origins
+app.use(cors({ origin: "*" })); // Allow all origins
 app.use("/", require("./routes"));
 
 passport.use(
