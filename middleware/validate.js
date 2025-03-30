@@ -7,8 +7,7 @@ const saveStaff = async (req, res, next) => {
     department: "required|string",
     position: "string",
     startDate: "required|date",
-    addresss: "required|string",
-    phone: "required|string"
+    address: "required|string",
   };
 
   await validator(req.body, validationRule, {}, (err, status) => {
@@ -24,5 +23,5 @@ const saveStaff = async (req, res, next) => {
   }).catch((err) => console.log(err));
 };
 module.exports = {
-  saveStaff
+  saveStaff,
 };
