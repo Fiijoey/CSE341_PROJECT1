@@ -3,7 +3,7 @@ const saveStaff = async (req, res, next) => {
   const validationRule = {
     name: "required|string",
     email: "required|string",
-    age: "required|min:18",
+    age: "required|integer",
     department: "required|string",
     position: "string",
     startDate: "required|date",

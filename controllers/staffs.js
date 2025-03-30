@@ -36,7 +36,7 @@ const createNewStaffMember = asyncHandler(async (req, res) => {
     age: req.body.age,
     department: req.body.department,
     position: req.body.position,
-    stateDate: req.body.startDate,
+    startDate: req.body.startDate,
     address: req.body.address,
   };
 
@@ -60,7 +60,7 @@ const updateStaffMember = asyncHandler(async (req, res) => {
     age: req.body.age,
     department: req.body.department,
     position: req.body.position,
-    stateDate: req.body.startDate,
+    startDate: req.body.startDate,
     address: req.body.address,
   };
 
