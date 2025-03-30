@@ -1,47 +1,35 @@
 const mongodb = require("../dB/db");
 const ObjectId = require("mongodb").ObjectId;
+const asyncHandler = require("../helpers/asyncHandler");
 
-const getAll = async (req, res) => {
-  try {
-    const staffList = await mongodb
-      .getDatabase()
-      .db()
-      .collection("staff_members")
-      .find();
-    staffList
-      .toArray()
-      .then((Staffs) => {
-        res.setHeader("Content-Type", "application/json");
-        res.status(200).json(Staffs);
-      })
-      .catch((error) => {
-        res.status(500).json({ error: "Failed to retrieve staff members" });
-      });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ error: "An error occurred while fetching staff members" });
-  }
-};
+const getAll = asyncHandler(async (req, res) => {
+  const staffList = await mongodb
+    .getDatabase()
+    .db()
+    .collection("staff_members")
+    .find();
+  const Staffs = await staffList.toArray();
+  res.setHeader("Content-Type", "application/json");
+  res.status(200).json(Staffs);
+});
 
-const getSingle = async (req, res) => {
+const getSingle = asyncHandler(async (req, res) => {
   if (!ObjectId.isValid(req.params.id)) {
-    res.status(400).json("Invalid ID");
+    return res.status(400).json({ error: "Invalid ID" });
   }
 
   const userId = new ObjectId(req.params.id);
-  const staffmember = await mongodb
+  const staffmemberCursor = await mongodb
     .getDatabase()
     .db()
     .collection("staff_members")
     .find({ _id: userId });
-  staffmember.toArray().then((staff) => {
-    res.setHeader("Content-Type", "application/json");
-    res.status(200).json(staff[0]);
-  });
-};
+  const staff = await staffmemberCursor.toArray();
+  res.setHeader("Content-Type", "application/json");
+  res.status(200).json(staff[0]);
+});
 
-const createNewStaffMember = async (req, res) => {
+const createNewStaffMember = asyncHandler(async (req, res) => {
   const newStaffMember = {
     name: req.body.name,
     email: req.body.email,
@@ -49,7 +37,7 @@ const createNewStaffMember = async (req, res) => {
     department: req.body.department,
     position: req.body.position,
     stateDate: req.body.startDate,
-    address: req.body.address
+    address: req.body.address,
   };
 
   const response = await mongodb
@@ -62,9 +50,9 @@ const createNewStaffMember = async (req, res) => {
   } else {
     res.status(500).json(response.error || "Error creating The staff member");
   }
-};
+});
 
-const updateStaffMember = async (req, res) => {
+const updateStaffMember = asyncHandler(async (req, res) => {
   const userId = new ObjectId(req.params.id);
   const newStaffMember = {
     name: req.body.name,
@@ -73,7 +61,7 @@ const updateStaffMember = async (req, res) => {
     department: req.body.department,
     position: req.body.position,
     stateDate: req.body.startDate,
-    address: req.body.address
+    address: req.body.address,
   };
 
   const response = await mongodb
@@ -86,11 +74,11 @@ const updateStaffMember = async (req, res) => {
   } else {
     res.status(500).json(response.error || "Error updating The staff member");
   }
-};
+});
 
-const deleteStaffMember = async (req, res) => {
+const deleteStaffMember = asyncHandler(async (req, res) => {
   if (!ObjectId.isValid(req.params.id)) {
-    res.status(400).json("Invalid ID");
+    return res.status(400).json({ error: "Invalid ID" });
   }
   const userId = new ObjectId(req.params.id);
   const response = await mongodb
@@ -103,7 +91,7 @@ const deleteStaffMember = async (req, res) => {
   } else {
     res.status(500).json(response.error || "Error deleting The staff member");
   }
-};
+});
 
 module.exports = {
   getAll,
