@@ -21,22 +21,22 @@ app.use(
 app.use(passport.initialize());
 
 app.use(passport.session());
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Z-Key, Authorization"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS, PATCH"
-  );
-  next();
-});
+// IMPORTANT: Ensure you are accessing the API via http://localhost:3000 instead of directly opening files.
+// Using file:// protocol will cause CORS errors as browsers enforce same-origin policy.
 app.use(
-  cors({ methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"] })
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allowedHeaders: [
+      "Origin",
+      "X-Requested-With",
+      "Content-Type",
+      "Accept",
+      "Z-Key",
+      "Authorization",
+    ],
+  })
 );
-app.use(cors({ origin: "*" })); // Allow all origins
 app.use("/", require("./routes"));
 
 passport.use(
@@ -94,6 +94,10 @@ mongodb.initDb((err) => {
   } else {
     app.listen(port, () => {
       console.log(`Server is running on port http://localhost:${port}`);
+      console.log(`Swagger UI available at: http://localhost:${port}/api-docs`);
+      console.log(
+        "NOTE: Always access the API and Swagger UI using http://localhost:${port} URLs, not file:// protocol"
+      );
     });
   }
 });
