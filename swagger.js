@@ -8,7 +8,7 @@ const doc = {
   // The host value should be accessible via http/https. Ensure it is not set to a file:// URL.
   // This prevents CORS errors like "URL scheme must be 'http' or 'https' for CORS request".
   host: process.env.HOST || "cse341-project1-v81l.onrender.com",
-  schemes: ["http", "https"],
+  schemes: ["https", "http"],
 };
 
 const outputFile = "./swagger.json";

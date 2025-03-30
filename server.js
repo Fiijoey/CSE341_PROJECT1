@@ -95,9 +95,6 @@ mongodb.initDb((err) => {
     app.listen(port, () => {
       console.log(`Server is running on port http://localhost:${port}`);
       console.log(`Swagger UI available at: http://localhost:${port}/api-docs`);
-      console.log(
-        "NOTE: Always access the API and Swagger UI using http://localhost:${port} URLs, not file:// protocol"
-      );
     });
   }
 });
